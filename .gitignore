@@ -2,3 +2,10 @@ pyvicon-datatstream-module
 unitree_sdk2_python
 __pycache__
 model/
+
+.vscode/
+results/
+motivo_isaac.egg-info/
+videos/
+data/*.npz
+data/*.pkl

@@ -4,6 +4,7 @@ import time
 from threading import Thread
 import sched
 import os
+import numpy as np
 
 import sys
 sys.path.append(".")
@@ -97,6 +98,10 @@ class BaseSimulator:
     def SimulationThread(self):
         sim_cnt = 0
         start_time = time.time()
+
+        lin_vel_sum = np.zeros(3)
+        ang_vel_sum = np.zeros(3)
+        print_interval = int(1.0 / self.sim_dt)
         
         scheduler = sched.scheduler(time.perf_counter, time.sleep)
         next_run_time = time.perf_counter()
@@ -104,9 +109,26 @@ class BaseSimulator:
         while self.viewer.is_running():
             scheduler.enterabs(next_run_time, 1, self._sim_step_scheduled, ())
             scheduler.run()
+
+            raw_xmat = self.mj_data.xmat[self.pelvis_body_id]
+            rotation_matrix = raw_xmat.reshape(3, 3)
+
+            global_lin_vel = self.mj_data.qvel[:3]
+            global_ang_vel = self.mj_data.qvel[3:6]
+
+            local_lin_vel = rotation_matrix.T @ global_lin_vel
+            local_ang_vel = rotation_matrix.T @ global_ang_vel
             
             next_run_time += self.sim_dt
             sim_cnt += 1
+
+            if sim_cnt % print_interval == 0:
+                avg_lin = np.round(local_lin_vel, 3)
+                avg_ang = np.round(local_ang_vel, 3)
+                print(f"[1Hz Avg] Lin: {np.round(avg_lin, 3)} | Ang: {np.round(avg_ang, 3)}")
+
+                lin_vel_sum.fill(0)
+                ang_vel_sum.fill(0)
             
             if sim_cnt % (self.viewer_dt / self.sim_dt) == 0:
                 self.viewer.sync()
@@ -114,7 +136,7 @@ class BaseSimulator:
             # Get FPS
             if sim_cnt % 100 == 0:
                 current_time = time.time()
-                print(f"FPS: {100 / (current_time - start_time)}")
+                # print(f"FPS: {100 / (current_time - start_time)}")
                 start_time = current_time
 
     def _sim_step_scheduled(self):
