@@ -1,0 +1,8 @@
+.vscode/
+**/__pycache__
+videos/
+motivo_isaac.egg-info/
+results/
+model/
+data/*.npz
+data/*.pkl
