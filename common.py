@@ -22,48 +22,15 @@ POLICY_JOINT_NAMES = [
     'right_wrist_roll_joint', 'right_wrist_pitch_joint', 'right_wrist_yaw_joint'
 ]
 
-# Action scales for each joint (in policy_joint_names order)
-ACTION_SCALES = np.array([
-    0.222001498914,  # left_hip_pitch_joint
-    0.22200157,      # left_hip_roll_joint
-    0.54754699,      # left_hip_yaw_joint
-    0.35066156,      # left_knee_joint
-    0.43857802,      # left_ankle_pitch_joint
-    0.43857802,      # left_ankle_roll_joint
-    0.222001498914,  # right_hip_pitch_joint
-    0.22200157,      # right_hip_roll_joint
-    0.54754699,      # right_hip_yaw_joint
-    0.35066156,      # right_knee_joint
-    0.43857802,      # right_ankle_pitch_joint
-    0.43857802,      # right_ankle_roll_joint
-    0.54754699,      # waist_yaw_joint
-    0.43857802,      # waist_roll_joint
-    0.43857802,      # waist_pitch_joint
-    0.43857802,      # left_shoulder_pitch_joint
-    0.43857802,      # left_shoulder_roll_joint
-    0.43857802,      # left_shoulder_yaw_joint
-    0.43857802,      # left_elbow_joint
-    0.43857802,      # left_wrist_roll_joint
-    0.07450086,      # left_wrist_pitch_joint
-    0.07466888,      # left_wrist_yaw_joint
-    0.43857802,      # right_shoulder_pitch_joint
-    0.43857802,      # right_shoulder_roll_joint
-    0.43857802,      # right_shoulder_yaw_joint
-    0.43857802,      # right_elbow_joint
-    0.43857802,      # right_wrist_roll_joint
-    0.07450086,      # right_wrist_pitch_joint
-    0.07450086,      # right_wrist_yaw_joint
-], dtype=np.float32)
-
 # PD control proportional gains (Kp) for each joint (in policy_joint_names order)
 KP_GAINS = np.array([
-    99.09843,   # left_hip_pitch_joint (.*_hip_pitch_joint)
+    40.1792,    # left_hip_pitch_joint (.*_hip_pitch_joint)
     99.0984,    # left_hip_roll_joint (.*_hip_roll_joint)
     40.1792,    # left_hip_yaw_joint (.*_hip_yaw_joint)
     99.0984,    # left_knee_joint (.*_knee_joint)
     28.5012,    # left_ankle_pitch_joint (.*ankle_pitch_joint)
     28.5012,    # left_ankle_roll_joint (.*ankle_roll_joint)
-    99.09843,   # right_hip_pitch_joint (.*_hip_pitch_joint)
+    40.1792,    # right_hip_pitch_joint (.*_hip_pitch_joint)
     99.0984,    # right_hip_roll_joint (.*_hip_roll_joint)
     40.1792,    # right_hip_yaw_joint (.*_hip_yaw_joint)
     99.0984,    # right_knee_joint (.*_knee_joint)
@@ -90,13 +57,13 @@ KP_GAINS = np.array([
 
 # PD control derivative gains (Kd) for each joint (in policy_joint_names order)
 KD_GAINS = np.array([
-    6.30880,    # left_hip_pitch_joint (.*_hip_pitch_joint)
+    2.5579,     # left_hip_pitch_joint (.*_hip_pitch_joint)
     6.3088,     # left_hip_roll_joint (.*_hip_roll_joint)
     2.5579,     # left_hip_yaw_joint (.*_hip_yaw_joint)
     6.3088,     # left_knee_joint (.*_knee_joint)
     1.8145,     # left_ankle_pitch_joint (.*ankle_pitch_joint)
     1.8145,     # left_ankle_roll_joint (.*ankle_roll_joint)
-    6.30880,    # right_hip_pitch_joint (.*_hip_pitch_joint)
+    2.5579,     # right_hip_pitch_joint (.*_hip_pitch_joint)
     6.3088,     # right_hip_roll_joint (.*_hip_roll_joint)
     2.5579,     # right_hip_yaw_joint (.*_hip_yaw_joint)
     6.3088,     # right_knee_joint (.*_knee_joint)
@@ -109,16 +76,16 @@ KD_GAINS = np.array([
     0.9072,     # left_shoulder_roll_joint (.*_shoulder_.*)
     0.9072,     # left_shoulder_yaw_joint (.*_shoulder_.*)
     0.9072,     # left_elbow_joint (.*_elbow_joint)
-    0.9072,    # left_wrist_roll_joint (.*_wrist_roll_joint)
-    1.0681,    # left_wrist_pitch_joint (.*_wrist_pitch_joint)
-    1.0681,    # left_wrist_yaw_joint (.*_wrist_yaw_joint)
+    0.9072,     # left_wrist_roll_joint (.*_wrist_roll_joint)
+    1.0681,     # left_wrist_pitch_joint (.*_wrist_pitch_joint)
+    1.0681,     # left_wrist_yaw_joint (.*_wrist_yaw_joint)
     0.9072,     # right_shoulder_pitch_joint (.*_shoulder_.*)
     0.9072,     # right_shoulder_roll_joint (.*_shoulder_.*)
     0.9072,     # right_shoulder_yaw_joint (.*_shoulder_.*)
     0.9072,     # right_elbow_joint (.*_elbow_joint)
-    0.9072,    # right_wrist_roll_joint (.*_wrist_roll_joint)
-    1.0681,    # right_wrist_pitch_joint (.*_wrist_pitch_joint)
-    1.0681,    # right_wrist_yaw_joint (.*_wrist_yaw_joint)
+    0.9072,     # right_wrist_roll_joint (.*_wrist_roll_joint)
+    1.0681,     # right_wrist_pitch_joint (.*_wrist_pitch_joint)
+    1.0681,     # right_wrist_yaw_joint (.*_wrist_yaw_joint)
 ], dtype=np.float32)
 
 # Default joint positions for each joint (in policy_joint_names order)
@@ -155,5 +122,39 @@ DEFAULT_JOINT_POS = np.array([
     0.0,    # right_wrist_yaw_joint
 ], dtype=np.float32)
 
+DOF_EFFORT_LIMITS = np.array([
+    88.0,
+    139.0,
+    88.0,
+    139.0,
+    35.0,
+    35.0,
+    88.0,
+    139.0,
+    88.0,
+    139.0,
+    35.0,
+    35.0,
+    88.0,
+    35.0,
+    35.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    5.0,
+    5.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    5.0,
+    5.0,
+], dtype=np.float32)
+
 # Global action rescale factor
 ACTION_RESCALE = 5.0
+
+ACTION_SCALES = 0.25 * DOF_EFFORT_LIMITS / KP_GAINS
